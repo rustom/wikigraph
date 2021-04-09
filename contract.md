@@ -23,3 +23,4 @@ All conflicts within the team will be decided by an arm-wrestle, or a typing spe
 ### Signatures
 I, Rustom Ichhaporia (rustomi2), agree to the terms of this contract.
 I, Ayan Mallik (amallik2), agree to the terms of this contract.
+I, Alec Chen (acc11), agree to the terms of this contract.
