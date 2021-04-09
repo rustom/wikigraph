@@ -1,20 +1,18 @@
 # CS 225 Data Structures
 ## Project Proposal (acc11-amallik2-rustomi2)
 
-1. **Leading Question** Given a datasets of Wikipedia articles and their respective links, we want to find the shortest path between any two articles and cluster the entire list of articles into different categories.
-2. **Dataset Acquistion and Processing** We propose using the [SNAP Wikipedia Navigation Dataset](https://snap.stanford.edu/data/wikispeedia.html). We'll focus on the links subset of this data, which consists of pairs of article names denoting that the first article contains a hyperlink to the second. This data is provided as a `*.tsv` file, which we can read line by line, delimiting pairs by a \t tab. The total number of lines is 119,882, which we realize is quite large. We propose that we can form a subset of the network for development if needed.
+1. **Leading Question** 
+Given a datasets of Wikipedia articles and their respective links, we want to find the shortest path between any two articles and cluster the entire list of articles into different categories.
+2. **Dataset Acquistion and Processing** 
+We propose using the [SNAP Wikipedia Navigation Dataset](https://snap.stanford.edu/data/wikispeedia.html). We'll focus on the links subset of this data, which consists of pairs of article names denoting that the first article contains a hyperlink to the second. This data is provided as a `*.tsv` file, which we can read line by line, delimiting pairs by a \t tab. The total number of lines is 119,882, which we realize is quite large. We propose that we can form a subset of the network for development and testing if needed. In the end, we will create a directed graph from our Wikipedia dataset where each article is a vertex and the edges represent links within that article to other articles.
 
-3. **Graph Algorithms** For our graph traversal, we propose to implement a simple BFS using an iterator. We expect the input to our iterator
-   constructor to be the starting airport ID node. Every time we call `operator++` on our implemented iterator, we expect it to update its internal
-   position to a new airport ID node, until there are no nodes left to traverse. 
+3. **Graph Algorithms** 
+For our graph traversal, we will implement a simple BFS using an iterator. Our constructor to the BFS iterator will take in a the name of an article
+that will act our starting node. Every time we call `operator++` on our implemented iterator, we expect it to update its internal position to a different article in the dataset that was linked by a previous article. Our BFS iterator will end once it has traversed all of the articles in our dataset. 
    
-   For one of our algorithms, we propose implementing Dijikstra's Algorithm. We expect the input to be the starting airport ID node and the destination
-   airport ID node. We expect the output to be the shortest path with the smallest number of connections from the starting airport to the destination
-   airport.
+Our first algorithm will be a pathfinding algorithm that finds the shortest path of any two articles. We propose to implement Dijikstra's Algorithm on our graph to accomplish this task and hope to achieve a runtime of O(ElogV) where V is the number of articles and E is the number of links. Our pathfinding algorithm will take the names of the starting article and the destination article. We expect the output to be the shortest path needing the least number of links to reach the destination article from the starting article.
    
-   For our final algorithm, we propose projecting our found shortest path (subgraph) onto a world map, using the locations of the airport IDs. We will 
-   map the respective latitude and longitudes of each airport onto the map, and then project our graph. We expect the input to be the shortest path
-   found using our Dijikstra's Algorithm implementation.
+For our second algorithm, we will use Kosaraju's algorithms to find strongly connected components within our directed graph of Wikipedia articles. By grouping our dataset into different clusters, we hope to find various categories within our datasets where articles within the same category have a path to one another. We hope to reach the optimal runtime of Kosaraju's algorithm of O(V+E) where V and E follow the same definitions as mentioned above.
 4. **Timeline** 
 
    April 7 - sync to complete project proposal and team contract
