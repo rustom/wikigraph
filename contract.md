@@ -9,7 +9,7 @@ We are close in residential spatial proximity, so we will use discretion on main
 Each team member can be contacted through email ({acc11, amallik2, rustomi2}@illinois.edu), Discord, or by knocking on the door. 
 Outside of emergencies or other commitments, we commit to responding to door-knocks within 24 hours.
 3. **Respect** 
-We will all respect one another's agency and make sure that all decisions are made unanimously. If we are unable to reach a consensus, we will consult a member of the CS 225 staff. 
+We will all respect one another's agency and make sure that all decisions are made unanimously. If we are unable to reach a consensus, we will consult a member of the CS 225 staff. We are friends going into this project, so we will get along just fine.
 
 ### Collaboration
 1. **Work Distribution** 
@@ -21,5 +21,5 @@ If a deliverable ends up taking more time, the rest of the team should apologize
 All conflicts within the team will be decided by an arm-wrestle, or a typing speed test if necessary. 
 
 ### Signatures
-I, Rustom Ichhaporia (rustomi2) agree to the terms of this contract.
-Any other takers?
+I, Rustom Ichhaporia (rustomi2), agree to the terms of this contract.
+I, Ayan Mallik (amallik2), agree to the terms of this contract.
