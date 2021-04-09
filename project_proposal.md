@@ -1,7 +1,7 @@
 # CS 225 Data Structures
 ## Project Proposal (acc11-amallik2-rustomi2)
 
-1. **Leading Question** Given two Spotify playlists A and B, which song from playlist A is most like playlist B.
+1. **Leading Question** Given a datasets of Wikipedia articles and their respective links, we want to find the shortest path between any two articles and cluster the entire list of articles into different categories.
 2. **Dataset Acquistion and Processing** We propose using the [OpenFlights Dataset](https://openflights.org/data.html). We will focus on the
    Route subset of this data, which consists of airline information, source airport, destination airport, and number of stops. This data is 
    provided in a `*.dat` format, and we will cite this reference from [Stack Overflow](https://stackoverflow.com/questions/15528468/how-to-read-dat-files-in-c)
