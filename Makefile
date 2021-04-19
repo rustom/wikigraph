@@ -1,8 +1,8 @@
 # Executable Name
-EXENAME = finalproj
+EXENAME = wikigraphs
 
 # Object Types
-OBJS = 	io_handler.o article.o main.o
+OBJS = 	io_handler.o articles.o main.o
 
 OBJDIR = obj
 
@@ -26,10 +26,10 @@ $(EXENAME): $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
 io_handler.o: main.cpp src/io_handler.cpp
-	$(CXX) $(CXXFLAGS) main.cpp src/io_handler.cpp
+	$(CXX) $(CXXFLAGS) src/io_handler.cpp
 
-article.o: main.cpp src/article.cpp
-	$(CXX) $(CXXFLAGS) main.cpp src/article.cpp
+graph.o: main.cpp src/articles.cpp
+	$(CXX) $(CXXFLAGS) src/articles.cpp
 
 # test: output_msg catch/catchmain.cpp sample.cpp
 # 	$(LD) catch/catchmain.cpp sample.cpp $(LDFLAGS) -o test
