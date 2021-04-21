@@ -1,8 +1,7 @@
 #include <iostream>
 #include "include/io_handler.hpp"
-#include "include/article.hpp"
+#include "include/articles.hpp"
 
 int main() {
-  wikigraphs::Article article;
-  std::cout << article.GetName() << std::endl;
+  wikigraphs::Articles article;
 }
