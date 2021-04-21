@@ -9,7 +9,7 @@ void Articles::AddArticle(const string & article) {
 }
 
 void Articles::AddLink(const string & article, const string & link) {
-  articles[article].push_back(link);
+  articles.at(article).push_back(link);
 }
 
 }
