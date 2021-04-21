@@ -1,11 +1,12 @@
 #include "../include/articles.hpp"
 
 using std::string;
+using std::unordered_set;
 
 namespace wikigraphs {
 
 void Articles::AddArticle(const string & article) {
-  articles.insert({article, vector<string>()});
+  articles.insert({article, unordered_set<string>()});
 }
 
 void Articles::AddArticles(const vector<string> & articles) {
@@ -15,7 +16,7 @@ void Articles::AddArticles(const vector<string> & articles) {
 }
 
 void Articles::AddLink(const string & article, const string & link) {
-  articles.at(article).push_back(link);
+  articles.at(article).insert(link);
 }
 
 
