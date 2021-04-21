@@ -3,10 +3,12 @@
 #include "include/articles.hpp"
 
 int main() {
-  wikigraphs::Articles article;
+  wikigraphs::Articles articles;
 
   wikigraphs::IOHandler io;
   
-  io.ReadArticles("data/articles.tsv");
+  std::vector<std::string> article_names = io.ReadArticles("data/articles.tsv");
+
+  std::vector<std::pair<std::string, std::string>> links = io.ReadLinks("data/links.tsv");
 
 }
