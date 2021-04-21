@@ -4,4 +4,9 @@
 
 int main() {
   wikigraphs::Articles article;
+
+  wikigraphs::IOHandler io;
+  
+  io.ReadArticles("data/articles.tsv");
+
 }

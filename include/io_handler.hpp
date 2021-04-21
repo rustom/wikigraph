@@ -1,12 +1,16 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <utility> // std::pair
+#include <fstream>
+#include <sstream> // std::getline
 
 using std::string;
 using std::vector;
 using std::pair;
+using std::ifstream;
 
 namespace wikigraphs { 
 
