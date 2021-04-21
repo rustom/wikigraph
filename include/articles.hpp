@@ -16,6 +16,7 @@ namespace wikigraphs {
 
 class Articles {
  public: 
+  Articles(const string & article_path, const string & link_path);
 
   void AddArticle(const string & article);
 

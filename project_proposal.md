@@ -17,7 +17,7 @@
 4. **Timeline** 
    
 - [X] April 9 - Submit project proposal and team contract   
-- [ ] April 16 - Set up Makefile, folder structure, and be able to read in data 
+- [X] April 16 - Set up Makefile, folder structure, and be able to read in data 
 - [ ] April 23 - Create iterators, Dijkstra's algorithm, and their tests 
 - [ ] April 29 - Create Kosaraju's algorithms and tests        
 - [ ] May 7 - Complete main program driver and report

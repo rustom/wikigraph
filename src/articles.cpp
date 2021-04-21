@@ -1,9 +1,24 @@
 #include "../include/articles.hpp"
+#include "../include/io_handler.hpp"
 
 using std::string;
 using std::unordered_set;
+using std::vector;
+using std::pair;
 
 namespace wikigraphs {
+
+Articles::Articles(const string & article_path, const string & link_path) {
+  wikigraphs::IOHandler io;
+  
+  vector<string> article_names = io.ReadArticles(article_path);
+
+  vector<pair<string, string>> links = io.ReadLinks(link_path);
+
+  AddArticles(article_names);
+  
+  AddLinks(links);
+}
 
 void Articles::AddArticle(const string & article) {
   articles.insert({article, unordered_set<string>()});
