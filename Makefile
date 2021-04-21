@@ -28,7 +28,7 @@ $(EXENAME): $(OBJS)
 io_handler.o: main.cpp src/io_handler.cpp
 	$(CXX) $(CXXFLAGS) src/io_handler.cpp
 
-graph.o: main.cpp src/articles.cpp
+articles.o: main.cpp src/articles.cpp
 	$(CXX) $(CXXFLAGS) src/articles.cpp
 
 # test: output_msg catch/catchmain.cpp sample.cpp

@@ -12,7 +12,7 @@ namespace wikigraphs {
 class Articles {
  public: 
 
-  void AddArticle(const string & name);
+  void AddArticle(const string & article);
 
   void AddLink(const string & article, const string & link);
 
