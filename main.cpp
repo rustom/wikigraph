@@ -11,4 +11,9 @@ int main() {
 
   std::vector<std::pair<std::string, std::string>> links = io.ReadLinks("data/links.tsv");
 
+  articles.AddArticles(article_names);
+  articles.AddLinks(links);
+
+  articles.PrintArticleMap();
+
 }
