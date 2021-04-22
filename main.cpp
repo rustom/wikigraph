@@ -7,8 +7,13 @@ int main() {
 
   // articles.PrintArticleMap();
 
-  for (auto it = articles.begin(); it != articles.end(); ++it) {
-    std::cout << *it << std::endl;
+  // for (auto it = articles.begin(); it != articles.end(); ++it) {
+  //   std::cout << *it << std::endl;
+  // }
+
+  auto path = articles.ShortestPath("Antimony", "London");
+  for (string article : path) {
+    std::cout << article << std::endl;
   }
 
 }

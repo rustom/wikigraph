@@ -58,11 +58,39 @@ unordered_set<string> Articles::GetLinkedArticles(string article) {
   return articles[article];
 }
 
-vector<string> Articles::ShortestPath(string start, string end) {
+vector<string> Articles::ShortestPath(string source, string target) {
 
-  (void) start;
-  (void) end;
-  return vector<string>();
+  unordered_map<string, string> prev;
+  auto it = Iterator(this, source);
+  while (it != end()) {
+    string curr = *it;
+    unordered_set<string> neighbors = articles[curr];
+    for (string article : neighbors) {
+      if (prev.find(article) == prev.end()) {
+        prev[article] = curr;
+      }
+    }
+    if (prev.find(target) != prev.end()) {
+      break;
+    }
+    ++it;
+  }
+
+  if (prev.find(target) == prev.end()) {
+    std::cout << "No path to target " << target << "." << std::endl;
+    return vector<string>();
+  }
+
+  vector<string> path;
+  string curr = target;
+  while (curr != source) {
+    path.push_back(curr);
+    curr = prev[curr];
+  }
+  path.push_back(source);
+  std::reverse(path.begin(), path.end());
+
+  return path;
 
 }
 
