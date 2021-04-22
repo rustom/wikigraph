@@ -54,6 +54,10 @@ void Articles::PrintArticleMap() {
 }
 
 
+unordered_set<string> Articles::GetLinkedArticles(string article) {
+  return articles[article];
+}
+
 vector<string> Articles::ShortestPath(string start, string end) {
 
   (void) start;
@@ -62,16 +66,49 @@ vector<string> Articles::ShortestPath(string start, string end) {
 
 }
 
-Articles::Iterator::Iterator() {
 
+Articles::Iterator Articles::begin() {
+  auto start_it = articles.begin();
+  string start = start_it->first;
+  return Iterator(this, start);
+}
+
+Articles::Iterator Articles::end() {
+  return Iterator();
+}
+
+Articles::Iterator::Iterator() {
+  article_graph = NULL;
 }
 
 Articles::Iterator::Iterator(Articles * articles, string start) {
-  this->articles = articles;
-  this->start = start;
+  article_graph = articles;
+  current = start;
+  q.push(current);
+  visited.insert(current);
 }
 
 Articles::Iterator & Articles::Iterator::operator++() {
+
+  if (q.empty()) {
+    return *this;
+  }
+
+  q.pop();
+  unordered_set<string> neighbors = article_graph->GetLinkedArticles(current);
+  for (string article : neighbors) {
+    bool vis = visited.find(article) != visited.end();
+    if (!vis) {
+      q.push(article);
+      visited.insert(article);
+    }
+  }
+
+  if (q.empty()) {
+    article_graph = NULL;
+  } else {
+    current = q.front();
+  }
 
   return *this;
 
@@ -79,14 +116,21 @@ Articles::Iterator & Articles::Iterator::operator++() {
 
 string Articles::Iterator::operator*() {
 
-  return string();
+  return current;
 
 }
 
 bool Articles::Iterator::operator!=(const Iterator &other) {
 
-  (void) other;
-  return false;
+  bool thisEmpty = false; 
+  bool otherEmpty = false;
+
+  if (article_graph == NULL) { thisEmpty = true; }
+  if (other.article_graph == NULL) { otherEmpty = true; }
+
+  if (thisEmpty && otherEmpty) return false; // both empty then they both have null graphs
+  else if ((!thisEmpty)&&(!otherEmpty)) return (q != other.q); // both not empty then compare the traversals
+  else return true;
 
 }
 

@@ -2,12 +2,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
 
 using std::string;
 using std::vector;
+using std::queue;
 using std::unordered_map;
 using std::pair;
 using std::unordered_set;
@@ -28,7 +30,10 @@ class Articles {
 
   void PrintArticleMap();
 
+  unordered_set<string> GetLinkedArticles(string article);
+
   vector<string> ShortestPath(string start, string end);
+
 
   class Iterator : std::iterator<std::forward_iterator_tag, string> {
    public:
@@ -41,10 +46,16 @@ class Articles {
 
    private:
 
-    Articles * articles;
-    string start;
+    Articles * article_graph;
+    string current;
+    queue<string> q;
+    unordered_set<string> visited;
 
   };
+
+  Iterator begin();
+  
+  Iterator end();
 
  private:
   unordered_map<string, unordered_set<string>> articles;

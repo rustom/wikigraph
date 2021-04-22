@@ -1,0 +1,6 @@
+
+# make files
+articles.o
+io_handler.o
+main.o
+wikigraphs
