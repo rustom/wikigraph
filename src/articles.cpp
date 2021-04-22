@@ -6,6 +6,8 @@ using std::unordered_set;
 using std::vector;
 using std::pair;
 
+
+
 namespace wikigraphs {
 
 Articles::Articles(const string & article_path, const string & link_path) {
@@ -50,5 +52,43 @@ void Articles::PrintArticleMap() {
     }
   }
 }
+
+
+vector<string> Articles::ShortestPath(string start, string end) {
+
+  (void) start;
+  (void) end;
+  return vector<string>();
+
+}
+
+Articles::Iterator::Iterator() {
+
+}
+
+Articles::Iterator::Iterator(Articles * articles, string start) {
+  this->articles = articles;
+  this->start = start;
+}
+
+Articles::Iterator & Articles::Iterator::operator++() {
+
+  return *this;
+
+}
+
+string Articles::Iterator::operator*() {
+
+  return string();
+
+}
+
+bool Articles::Iterator::operator!=(const Iterator &other) {
+
+  (void) other;
+  return false;
+
+}
+
 
 }

@@ -28,6 +28,24 @@ class Articles {
 
   void PrintArticleMap();
 
+  vector<string> ShortestPath(string start, string end);
+
+  class Iterator : std::iterator<std::forward_iterator_tag, string> {
+   public:
+    Iterator();
+    Iterator(Articles * articles, string start);
+
+    Iterator & operator++();
+    string operator*();
+    bool operator!=(const Iterator &other);
+
+   private:
+
+    Articles * articles;
+    string start;
+
+  };
+
  private:
   unordered_map<string, unordered_set<string>> articles;
 };
