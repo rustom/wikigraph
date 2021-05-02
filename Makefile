@@ -17,8 +17,6 @@ LDFLAGS = -std=c++14 -stdlib=libc++ -lc++abi -lm
 
 all : $(EXENAME)
 
-# output_msg: ; $(CLANG_VERSION_MSG)
-
 $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
@@ -28,11 +26,11 @@ $(EXENAME): $(OBJS)
 io_handler.o: main.cpp src/io_handler.cpp
 	$(CXX) $(CXXFLAGS) src/io_handler.cpp
 
-articles.o: main.cpp src/articles.cpp
+articles.o: main.cpp src/articles.cpp 
 	$(CXX) $(CXXFLAGS) src/articles.cpp
 
-test: test/test.cpp test/catch.hpp
-	$(LD) test/catch.hpp test/test.cpp $(LDFLAGS) 
+test: tests/test.cpp tests/catch.hpp src/io_handler.cpp src/articles.cpp
+	$(LD) tests/catch.hpp tests/test.cpp src/io_handler.cpp src/articles.cpp $(LDFLAGS) 
 
 clean:
-	-rm -f *.o $(EXENAME) test/catch.hpp.gch a.out
+	-rm -f *.o $(EXENAME) tests/catch.hpp.gch a.out

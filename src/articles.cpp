@@ -53,6 +53,9 @@ void Articles::PrintArticleMap() {
   }
 }
 
+unordered_map<string, unordered_set<string>> Articles::GetArticles() {
+  return articles;
+}
 
 unordered_set<string> Articles::GetLinkedArticles(const string & article) {
   return articles[article];

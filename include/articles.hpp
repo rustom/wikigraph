@@ -30,6 +30,8 @@ class Articles {
 
   void PrintArticleMap();
 
+  unordered_map<string, unordered_set<string>> GetArticles();
+
   unordered_set<string> GetLinkedArticles(const string & article);
 
   vector<string> ShortestPathUnweighted(const string & source, const string & target);
