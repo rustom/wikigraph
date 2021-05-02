@@ -58,7 +58,7 @@ unordered_set<string> Articles::GetLinkedArticles(string article) {
   return articles[article];
 }
 
-vector<string> Articles::ShortestPath(string source, string target) {
+vector<string> Articles::ShortestPathUnweighted(string source, string target) {
 
   unordered_map<string, string> prev;
   auto it = Iterator(this, source);
@@ -66,17 +66,17 @@ vector<string> Articles::ShortestPath(string source, string target) {
     string curr = *it;
     unordered_set<string> neighbors = articles[curr];
     for (string article : neighbors) {
-      if (prev.find(article) == prev.end()) {
+      if (prev.count(article) == 0) {
         prev[article] = curr;
       }
     }
-    if (prev.find(target) != prev.end()) {
+    if (prev.count(target) == 1) {
       break;
     }
     ++it;
   }
 
-  if (prev.find(target) == prev.end()) {
+  if (prev.count(target) == 0) {
     std::cout << "No path to target " << target << "." << std::endl;
     return vector<string>();
   }
@@ -94,6 +94,62 @@ vector<string> Articles::ShortestPath(string source, string target) {
 
 }
 
+vector<string> Articles::ShortestPathWeighted(string source, string target) {
+
+  unordered_map<string, string> prev_vis;
+  unordered_map<string, int> dist;
+  vector<string> next;
+
+  prev_vis[source] = "";
+  dist[source] = 0;
+  next.push_back(source);
+
+  while (!next.empty()) {
+
+    string next_article = next.back();
+    int min_dist = dist[next_article];
+    next.pop_back();
+
+    if (next_article == target) {
+      break;
+    }
+
+    unordered_set<string> adj_articles = articles[next_article];
+    for (const string & adj_article : adj_articles) {
+      if (prev_vis.count(adj_article) == 1) {
+        continue;
+      }
+
+      prev_vis[adj_article] = next_article;
+      int edge_weight = articles[adj_article].size();
+      int new_dist = edge_weight + min_dist;
+      dist[adj_article] = new_dist;
+
+      size_t index = FindIndex(next, dist, new_dist);
+      next.insert(next.begin() + index, adj_article);
+
+    }
+
+  }
+
+  // Beyond is same as in unweighted path
+  if (prev_vis.count(target) == 0) {
+    std::cout << "No path to target " << target << "." << std::endl;
+    return vector<string>();
+  }
+
+  vector<string> path;
+  string curr = target;
+  while (curr != source) {
+    path.push_back(curr);
+    curr = prev_vis[curr];
+  }
+  path.push_back(source);
+  std::reverse(path.begin(), path.end());
+
+  return path;
+
+}
 
 Articles::Iterator Articles::begin() {
   auto start_it = articles.begin();
@@ -159,6 +215,25 @@ bool Articles::Iterator::operator!=(const Iterator &other) {
   if (thisEmpty && otherEmpty) return false; // both empty then they both have null graphs
   else if ((!thisEmpty)&&(!otherEmpty)) return (q != other.q); // both not empty then compare the traversals
   else return true;
+
+}
+
+
+size_t Articles::FindIndex(const vector<string> & sorted_list, const unordered_map<string, int> & values, int value) {
+
+  int left = 0, right = sorted_list.size();
+  while (left != right) {
+      int mid = (left + right) / 2;
+      if (values.at(sorted_list[mid]) == value) {
+          return mid;
+      } else if (value > values.at(sorted_list[mid])) {
+          right = mid;
+      } else {
+          left = mid + 1;
+      }
+  }
+
+  return left;
 
 }
 
