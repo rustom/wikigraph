@@ -31,8 +31,8 @@ io_handler.o: main.cpp src/io_handler.cpp
 articles.o: main.cpp src/articles.cpp
 	$(CXX) $(CXXFLAGS) src/articles.cpp
 
-# test: output_msg catch/catchmain.cpp sample.cpp
-# 	$(LD) catch/catchmain.cpp sample.cpp $(LDFLAGS) -o test
+test: test/test.cpp test/catch.hpp
+	$(LD) test/catch.hpp test/test.cpp $(LDFLAGS) 
 
 clean:
-	-rm -f *.o $(EXENAME) test
+	-rm -f *.o $(EXENAME) test/catch.hpp.gch a.out
