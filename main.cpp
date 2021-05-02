@@ -11,7 +11,7 @@ int main() {
   //   std::cout << *it << std::endl;
   // }
 
-  auto path = articles.ShortestPath("Antimony", "London");
+  auto path = articles.ShortestPathWeighted("Antimony", "London");
   for (string article : path) {
     std::cout << article << std::endl;
   }

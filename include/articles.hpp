@@ -32,8 +32,9 @@ class Articles {
 
   unordered_set<string> GetLinkedArticles(string article);
 
-  vector<string> ShortestPath(string start, string end);
+  vector<string> ShortestPathUnweighted(string source, string target);
 
+  vector<string> ShortestPathWeighted(string source, string target);
 
   class Iterator : std::iterator<std::forward_iterator_tag, string> {
    public:
@@ -59,6 +60,13 @@ class Articles {
 
  private:
   unordered_map<string, unordered_set<string>> articles;
+
+  /**
+   * Binary search helper for dijkstra's
+   * Finds index within list of sorted articles according to path weight in unordered_map values - descending order
+   */
+  size_t FindIndex(const vector<string> & sorted_list, const unordered_map<string, int> & values, int value);
+
 };
 
 }
