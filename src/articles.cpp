@@ -54,11 +54,11 @@ void Articles::PrintArticleMap() {
 }
 
 
-unordered_set<string> Articles::GetLinkedArticles(string article) {
+unordered_set<string> Articles::GetLinkedArticles(const string & article) {
   return articles[article];
 }
 
-vector<string> Articles::ShortestPathUnweighted(string source, string target) {
+vector<string> Articles::ShortestPathUnweighted(const string & source, const string & target) {
 
   unordered_map<string, string> prev;
   auto it = Iterator(this, source);
@@ -94,7 +94,7 @@ vector<string> Articles::ShortestPathUnweighted(string source, string target) {
 
 }
 
-vector<string> Articles::ShortestPathWeighted(string source, string target) {
+vector<string> Articles::ShortestPathWeighted(const string & source, const string & target) {
 
   unordered_map<string, string> prev_vis;
   unordered_map<string, int> dist;
@@ -165,7 +165,7 @@ Articles::Iterator::Iterator() {
   article_graph = NULL;
 }
 
-Articles::Iterator::Iterator(Articles * articles, string start) {
+Articles::Iterator::Iterator(Articles * articles, const string & start) {
   article_graph = articles;
   current = start;
   q.push(current);

@@ -30,16 +30,16 @@ class Articles {
 
   void PrintArticleMap();
 
-  unordered_set<string> GetLinkedArticles(string article);
+  unordered_set<string> GetLinkedArticles(const string & article);
 
-  vector<string> ShortestPathUnweighted(string source, string target);
+  vector<string> ShortestPathUnweighted(const string & source, const string & target);
 
-  vector<string> ShortestPathWeighted(string source, string target);
+  vector<string> ShortestPathWeighted(const string & source, const string & target);
 
   class Iterator : std::iterator<std::forward_iterator_tag, string> {
    public:
     Iterator();
-    Iterator(Articles * articles, string start);
+    Iterator(Articles * articles, const string & start);
 
     Iterator & operator++();
     string operator*();
