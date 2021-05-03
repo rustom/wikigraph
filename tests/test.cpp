@@ -17,6 +17,20 @@ using std::string;
 using std::vector;
 using std::unordered_map;
 using std::unordered_set;
+using std::pair;
+using std::cout;
+using std::endl;
+
+// Helper methods
+void PrintGraph(unordered_map<string, unordered_set<string>> graph) {
+  for (pair<const string, unordered_set<string>> & p : graph) {
+    cout << p.first << ": ";
+    for (const string & s : p.second) {
+      cout << s << ", ";
+    }
+    cout << endl;
+  }
+}
 
 TEST_CASE("Loading in data files") {
   REQUIRE(1 == 1);
@@ -41,6 +55,6 @@ TEST_CASE("Shortest paths") {
 
   SECTION("Weighted") {
     // Fix this output
-    REQUIRE(articles.ShortestPathWeighted("4", "1") == vector<string>({"1", "2", "3" }));
+    REQUIRE(articles.ShortestPathWeighted("4", "3") == vector<string>({"4", "1", "2", "3" }));
   }
 }
