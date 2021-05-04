@@ -183,7 +183,7 @@ Articles::Iterator & Articles::Iterator::operator++() {
 
   q.pop();
   unordered_set<string> neighbors = article_graph->GetLinkedArticles(current);
-  for (string article : neighbors) {
+  for (const string & article : neighbors) {
     bool vis = visited.find(article) != visited.end();
     if (!vis) {
       q.push(article);
@@ -193,6 +193,7 @@ Articles::Iterator & Articles::Iterator::operator++() {
 
   if (q.empty()) {
     article_graph = NULL;
+    current = "End of iterator";
   } else {
     current = q.front();
   }

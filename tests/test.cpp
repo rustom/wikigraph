@@ -33,7 +33,6 @@ void PrintGraph(unordered_map<string, unordered_set<string>> graph) {
 }
 
 TEST_CASE("Loading in data files") {
-  REQUIRE(1 == 1);
   Articles articles("data/tests/articles.tsv", "data/tests/links.tsv");
   unordered_map<string, unordered_set<string>> structure = articles.GetArticles();
 
@@ -46,6 +45,30 @@ TEST_CASE("Loading in data files") {
   solution.insert({"6", unordered_set<string>({"2"})});
 
   REQUIRE(solution == structure);
+}
+
+TEST_CASE("BFS Iterator") {
+  Articles articles("data/tests/articles.tsv", "data/tests/links.tsv");
+  Articles::Iterator it = articles.begin();
+
+  SECTION("BFS Iterator follows queue sequence when traversing articles") {
+    REQUIRE(*it == "6");
+    ++it;
+
+    REQUIRE(*it == "2");
+    ++it;
+
+    REQUIRE(*it == "3");
+    ++it;
+
+    REQUIRE(*it == "5");
+    ++it;
+
+    REQUIRE(*it == "4");
+    ++it;
+
+    REQUIRE(*it == "End of iterator");
+  }
 }
 
 TEST_CASE("Shortest paths") {
