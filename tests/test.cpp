@@ -23,7 +23,7 @@ using std::endl;
 
 // Helper methods
 void PrintGraph(unordered_map<string, unordered_set<string>> graph) {
-  for (pair<const string, unordered_set<string>> & p : graph) {
+  for (const pair<const string, unordered_set<string>> & p : graph) {
     cout << p.first << ": ";
     for (const string & s : p.second) {
       cout << s << ", ";
@@ -38,10 +38,12 @@ TEST_CASE("Loading in data files") {
   unordered_map<string, unordered_set<string>> structure = articles.GetArticles();
 
   unordered_map<string, unordered_set<string>> solution;
-  solution.insert({"1", unordered_set<string>({"1", "2"})});
-  solution.insert({"2", unordered_set<string>({"3"})});
-  solution.insert({"3", unordered_set<string>({"4"})});
-  solution.insert({"4", unordered_set<string>({"1"})});
+  solution.insert({"1", unordered_set<string>({"1", "2", "5"})});
+  solution.insert({"2", unordered_set<string>({"2", "3", "5"})});
+  solution.insert({"3", unordered_set<string>({"4", "6"})});
+  solution.insert({"4", unordered_set<string>({"3"})});
+  solution.insert({"5", unordered_set<string>({"4"})});
+  solution.insert({"6", unordered_set<string>({"2"})});
 
   REQUIRE(solution == structure);
 }
@@ -50,11 +52,16 @@ TEST_CASE("Shortest paths") {
   Articles articles("data/tests/articles.tsv", "data/tests/links.tsv");
 
   SECTION("Unweighted") {
-    REQUIRE(articles.ShortestPathUnweighted("1", "4") == vector<string>({"1", "2", "3", "4"}));
+    REQUIRE(articles.ShortestPathUnweighted("1", "6") == vector<string>({"1", "2", "3", "6"}));
   } 
 
   SECTION("Weighted") {
     // Fix this output
-    REQUIRE(articles.ShortestPathWeighted("4", "3") == vector<string>({"4", "1", "2", "3" }));
+    REQUIRE(articles.ShortestPathWeighted("4", "2") == vector<string>({"4", "3", "6", "2"}));
+  }
+
+  SECTION("Weighted and Unweighted can produce different shortest paths") {
+    REQUIRE(articles.ShortestPathUnweighted("1", "3") == vector<string>({"1", "2", "3"}));
+    REQUIRE(articles.ShortestPathWeighted("1", "3") == vector<string>({"1", "5", "4", "3" }));
   }
 }
