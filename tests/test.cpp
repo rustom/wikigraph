@@ -7,7 +7,6 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
-#include <algorithm>
 
 #include "../include/articles.hpp"
 #include "../include/io_handler.hpp"
@@ -49,9 +48,10 @@ TEST_CASE("Loading in data files") {
 
 TEST_CASE("BFS Iterator") {
   Articles articles("data/tests/articles.tsv", "data/tests/links.tsv");
-  Articles::Iterator it = articles.begin();
 
   SECTION("BFS Iterator follows queue sequence when traversing articles") {
+    Articles::Iterator it = articles.begin();
+
     REQUIRE(*it == "6");
     ++it;
 
@@ -69,16 +69,63 @@ TEST_CASE("BFS Iterator") {
 
     REQUIRE(*it == "End of iterator");
   }
+  
+  SECTION("Adding a new link to the articles graphs changes the ordering of the BFS traversal") {
+    articles.AddLink("6", "4");
+    Articles::Iterator it = articles.begin();
+
+    REQUIRE(*it == "6");
+    ++it;
+
+    REQUIRE(*it == "2");
+    ++it;
+
+    REQUIRE(*it == "4");
+    ++it;
+
+    REQUIRE(*it == "3");
+    ++it;
+
+    REQUIRE(*it == "5");
+    ++it;
+
+    REQUIRE(*it == "End of iterator");
+  }
+
+  SECTION("Adding new links between disconnected components expands number of articles visited") {
+    articles.AddLink("3", "1");
+    Articles::Iterator it = articles.begin();
+
+    REQUIRE(*it == "6");
+    ++it;
+
+    REQUIRE(*it == "2");
+    ++it;
+
+    REQUIRE(*it == "3");
+    ++it;
+
+    REQUIRE(*it == "5");
+    ++it;
+
+    REQUIRE(*it == "4");
+    ++it;
+
+    REQUIRE(*it == "1");
+    ++it;
+
+    REQUIRE(*it == "End of iterator");
+  }
 }
 
-TEST_CASE("Shortest paths") {
+TEST_CASE("Determing shortest path from source to target article") {
   Articles articles("data/tests/articles.tsv", "data/tests/links.tsv");
 
-  SECTION("Unweighted") {
+  SECTION("Unweighted (BFS Traversal)") {
     REQUIRE(articles.ShortestPathUnweighted("1", "6") == vector<string>({"1", "2", "3", "6"}));
   } 
 
-  SECTION("Weighted") {
+  SECTION("Weighted (Djikstra's algorithm)") {
     // Fix this output
     REQUIRE(articles.ShortestPathWeighted("4", "2") == vector<string>({"4", "3", "6", "2"}));
   }
@@ -86,5 +133,52 @@ TEST_CASE("Shortest paths") {
   SECTION("Weighted and Unweighted can produce different shortest paths") {
     REQUIRE(articles.ShortestPathUnweighted("1", "3") == vector<string>({"1", "2", "3"}));
     REQUIRE(articles.ShortestPathWeighted("1", "3") == vector<string>({"1", "5", "4", "3" }));
+  }
+}
+
+TEST_CASE("Determing no path from source to target article") {
+  Articles articles("data/tests/articles.tsv", "data/tests/links.tsv");
+
+  SECTION("Unweighted path algorithm returns empty list") {
+    REQUIRE(articles.ShortestPathUnweighted("6", "1") == vector<string>());
+  }
+
+  SECTION("Weighted path algorithm also returns empty list") {
+    REQUIRE(articles.ShortestPathWeighted("6", "1") == vector<string>());
+  }
+}
+
+TEST_CASE("Kosaraju's algorithm identifies clusters of articles within the graph") {
+  SECTION("Articles graph has multiple clusters of articles") {
+    Articles articles("data/tests/articles.tsv", "data/tests/multiple_clusters_links.tsv");
+    vector<vector<string>> clusters = articles.GetClusters();
+
+    SECTION("Number of clusters") {
+      REQUIRE(clusters.size() == 3);
+    }
+
+    SECTION("First cluster") {
+      REQUIRE(clusters.at(0) == vector<string>({"3", "5", "2", "6"}));
+    }
+
+    SECTION("Second cluster") {
+      REQUIRE(clusters.at(1) == vector<string>({"1"}));
+    }
+
+    SECTION("Third cluster") {
+      REQUIRE(clusters.at(2) == vector<string>({"4"}));
+    }
+  }
+  SECTION("Articles graph has single cluster containing all the artices") {
+    Articles articles("data/tests/articles.tsv", "data/tests/single_cluster_links.tsv");
+    vector<vector<string>> clusters = articles.GetClusters();
+
+    SECTION("Number of clusters") {
+      REQUIRE(clusters.size() == 1);
+    }
+
+    SECTION("Single cluster contains all of the articles") {
+      REQUIRE(clusters.at(0) == vector<string>({"1", "2", "3", "4", "5", "6"}));
+    }
   }
 }

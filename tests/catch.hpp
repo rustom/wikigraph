@@ -17,12 +17,6 @@
 #define CATCH_VERSION_MINOR 13
 #define CATCH_VERSION_PATCH 6
 
-#ifdef __clang__
-#    pragma clang system_header
-#elif defined __GNUC__
-#    pragma GCC system_header
-#endif
-
 // start catch_suppress_warnings.h
 
 #ifdef __clang__
