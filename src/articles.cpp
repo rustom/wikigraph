@@ -15,14 +15,13 @@ Articles::Articles() {
 }
 
 Articles::Articles(const string & article_path, const string & link_path) {
+  // Sets up io_handler to read list of articles and mapping of links
   wikigraphs::IOHandler io;
-  
   vector<string> article_names = io.ReadArticles(article_path);
-
   vector<pair<string, string>> links = io.ReadLinks(link_path);
 
+  // Adds list of articles and links to the articles graph
   AddArticles(article_names);
-  
   AddLinks(links);
 }
 
@@ -31,17 +30,20 @@ void Articles::AddArticle(const string & article) {
 }
 
 void Articles::AddArticles(const vector<string> & articles) {
+  // Traverses list of articles to add each new node to the graph
   for (const string & article : articles) {
     AddArticle(article);
   }
 }
 
 void Articles::AddLink(const string & article, const string & link) {
+  // Adds each link to its respective article
   articles.at(article).insert(link);
 }
 
 
 void Articles::AddLinks(const vector<pair<string, string>> & links) {
+  // Traverses each article-link pair in the list of links
   for (const pair<string, string> & link : links) {
     AddLink(link.first, link.second); 
   }
@@ -65,8 +67,10 @@ unordered_set<string> Articles::GetLinkedArticles(const string & article) {
 }
 
 vector<string> Articles::ShortestPathUnweighted(const string & source, const string & target) {
-
+  // Used for backtracking the path of articles from source to target
   unordered_map<string, string> prev;
+
+  // Sets up a BFS iterator starting from the source article
   auto it = Iterator(this, source);
   while (it != end()) {
     string curr = *it;
@@ -82,11 +86,13 @@ vector<string> Articles::ShortestPathUnweighted(const string & source, const str
     ++it;
   }
 
+  // Alerts the user if there's no path from source to target and returns an empty lists
   if (prev.count(target) == 0) {
     std::cout << "No path to target " << target << "." << std::endl;
     return vector<string>();
   }
 
+  // Backtracking
   vector<string> path;
   string curr = target;
   while (curr != source) {
@@ -94,6 +100,8 @@ vector<string> Articles::ShortestPathUnweighted(const string & source, const str
     curr = prev[curr];
   }
   path.push_back(source);
+
+  // Reverses the path to put it in its correct ordering
   std::reverse(path.begin(), path.end());
 
   return path;
@@ -101,7 +109,8 @@ vector<string> Articles::ShortestPathUnweighted(const string & source, const str
 }
 
 vector<string> Articles::ShortestPathWeighted(const string & source, const string & target) {
-
+  // Extra local variables that are part of Djikstra's algorithm
+  // Djikstra's algorithm requires more space than a standard BFS traversal
   unordered_map<string, string> prev_vis;
   unordered_map<string, int> dist;
   vector<string> next;
@@ -144,6 +153,7 @@ vector<string> Articles::ShortestPathWeighted(const string & source, const strin
     return vector<string>();
   }
 
+  // Backtracking
   vector<string> path;
   string curr = target;
   while (curr != source) {
@@ -160,16 +170,20 @@ vector<string> Articles::ShortestPathWeighted(const string & source, const strin
 vector<vector<string>> Articles::GetClusters() {
   unordered_set<string> visited_articles;
 
-  for (auto articles : *this) {
+  // Runs BFS traversal to fill list of visited articles
+  for (const string & articles : *this) {
     visited_articles.insert(articles);
   }
 
+  // Transposes the articles graph to run Kosaraju's algorithm
   Articles transposed_graph;
 
+  // Adds each article to the transposed graph
   for (const auto & article : articles) {
     transposed_graph.AddArticle(article.first);
   }
 
+  // Reverses each link to fill the contents of the transposed graph
   for (const auto & article : articles) {
     for (const string & link : article.second) {
       transposed_graph.AddLink(link, article.first);
@@ -177,12 +191,16 @@ vector<vector<string>> Articles::GetClusters() {
   }
 
   vector<vector<string>> clusters;
+
+  // Continues to extract new clusters until there are no articles left
   while (!visited_articles.empty()) {
     vector<string> cluster;
 
+    // Runs BFS iterator on the transposed graph starting at the next visited article
     for (auto it = Iterator(&transposed_graph, *(visited_articles.begin())); it != end(); ++it) {
       string article = *it;
 
+      // Adds the revisited article to the cluster before removing it from the list
       if (visited_articles.find(article) != visited_articles.end()) {
         cluster.push_back(article);
         visited_articles.erase(article);
@@ -193,16 +211,17 @@ vector<vector<string>> Articles::GetClusters() {
   }
 
   return clusters;
-
 }
 
 Articles::Iterator Articles::begin() {
+  // Creates a BFS iterator starting at the first article in the unordered_map
   auto start_it = articles.begin();
   string start = start_it->first;
   return Iterator(this, start);
 }
 
 Articles::Iterator Articles::end() {
+  // Returns a default (NULL) iterator
   return Iterator();
 }
 
@@ -218,7 +237,6 @@ Articles::Iterator::Iterator(Articles * articles, const string & start) {
 }
 
 Articles::Iterator & Articles::Iterator::operator++() {
-
   if (q.empty()) {
     return *this;
   }
@@ -241,17 +259,13 @@ Articles::Iterator & Articles::Iterator::operator++() {
   }
 
   return *this;
-
 }
 
 string Articles::Iterator::operator*() {
-
   return current;
-
 }
 
 bool Articles::Iterator::operator!=(const Iterator &other) {
-
   bool thisEmpty = false; 
   bool otherEmpty = false;
 
@@ -261,12 +275,11 @@ bool Articles::Iterator::operator!=(const Iterator &other) {
   if (thisEmpty && otherEmpty) return false; // both empty then they both have null graphs
   else if ((!thisEmpty)&&(!otherEmpty)) return (q != other.q); // both not empty then compare the traversals
   else return true;
-
 }
 
 
 size_t Articles::FindIndex(const vector<string> & sorted_list, const unordered_map<string, int> & values, int value) {
-
+  // Used for running Djikstra's algorithm
   int left = 0, right = sorted_list.size();
   while (left != right) {
       int mid = (left + right) / 2;
@@ -280,7 +293,6 @@ size_t Articles::FindIndex(const vector<string> & sorted_list, const unordered_m
   }
 
   return left;
-
 }
 
 }
