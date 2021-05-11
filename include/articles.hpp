@@ -70,32 +70,77 @@ class Articles {
    */
   unordered_set<string> GetLinkedArticles(const string & article);
 
+  /**
+   * Utilizes the BFS iterator to find the shortest path from the source article to the target article
+   * Returns the list of intermediate articles if there is a path
+   * If not, returns an empty list and outputs a message saying there is no possible path
+   */
   vector<string> ShortestPathUnweighted(const string & source, const string & target);
 
+  /**
+   * Runs Djikstra's algorithm to find the shortest weighted path from the source article to the target
+   * Weights each edge based on the number of links at that current article
+   * Returns a list of articles that contain the least amount of links in total to get from source to target
+   */
   vector<string> ShortestPathWeighted(const string & source, const string & target);
 
+  /**
+   * Runs Kosaraju's algorithm to detected strongly connected components (clusters) within the articles graph
+   * Articles fall within the same cluster if there a path to each article from each article in the cluster
+   * Returns a list of clusters (2D vector) where each inner vector represents a cluster of articles
+   */
   vector<vector<string>> GetClusters();
 
+  /**
+   * BFS (breath-first search) iterator
+   * Our traversal algorithm for this articles graph data structure
+   */
   class Iterator : std::iterator<std::forward_iterator_tag, string> {
    public:
+    /**
+     * Default constructor that links to null articles graph
+     */
     Iterator();
+
+    /**
+     * Sets the start node to the respective article within the specified graph
+     */
     Iterator(Articles * articles, const string & start);
 
+    /**
+     * Increments the iterator to the next article node in the BFS traversal
+     * Updates the current node
+     */
     Iterator & operator++();
+
+    /**
+     * Deferences the iterator to retrieve the name of the current article
+     */
     string operator*();
+
+    /**
+     * Determines inequality between two iterator
+     * Used to track the end of the BFS traversal
+     */
     bool operator!=(const Iterator &other);
 
    private:
 
-    Articles * article_graph;
-    string current;
-    queue<string> q;
-    unordered_set<string> visited;
+    Articles * article_graph;       // Pointer to the articles graph that the iterator is traversing through
+    string current;                 // Name of the current article that the iterator is on
+    queue<string> q;                // Queue of articles that the iterator will increment towards
+    unordered_set<string> visited;  // List of articles that the iterator has already traversed
 
   };
 
+  /**
+   * Returns an iterator starting at the first article within the graph
+   */
   Iterator begin();
   
+  /**
+   * Returns a NULL iterator
+   */
   Iterator end();
 
  private:
