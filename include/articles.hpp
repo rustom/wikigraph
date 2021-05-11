@@ -56,11 +56,6 @@ class Articles {
   void AddLinks(const vector<pair<string, string>> & links);
 
   /**
-   * Prints the content of the article graph
-   */
-  void PrintArticleMap();
-
-  /**
    * Gets a copy of the unordered map that contains the articles/links within the graph
    */
   unordered_map<string, unordered_set<string>> GetArticles();
@@ -89,7 +84,7 @@ class Articles {
    * Articles fall within the same cluster if there a path to each article from each article in the cluster
    * Returns a list of clusters (2D vector) where each inner vector represents a cluster of articles
    */
-  vector<vector<string>> GetClusters();
+  vector<vector<string>> GetStronglyConnectedComponents();
 
   /**
    * BFS (breath-first search) iterator

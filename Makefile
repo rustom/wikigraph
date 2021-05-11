@@ -2,7 +2,7 @@
 EXENAME = wikigraphs
 
 # Object Types
-OBJS = 	io_handler.o articles.o main.o
+OBJS = 	driver.o io_handler.o articles.o main.o
 
 OBJDIR = obj
 
@@ -22,6 +22,9 @@ $(OBJDIR)/%.o: %.cpp
 
 $(EXENAME): $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
+
+driver.o: main.cpp src/driver.cpp
+	$(CXX) $(CXXFLAGS) src/driver.cpp
 
 io_handler.o: main.cpp src/io_handler.cpp
 	$(CXX) $(CXXFLAGS) src/io_handler.cpp

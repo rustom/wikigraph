@@ -6,8 +6,6 @@ using std::unordered_set;
 using std::vector;
 using std::pair;
 
-
-
 namespace wikigraphs {
 
 Articles::Articles() {
@@ -46,15 +44,6 @@ void Articles::AddLinks(const vector<pair<string, string>> & links) {
   // Traverses each article-link pair in the list of links
   for (const pair<string, string> & link : links) {
     AddLink(link.first, link.second); 
-  }
-}
-
-void Articles::PrintArticleMap() {
-  for (const auto & article : articles) {
-    std::cout << "Article: " << article.first << std::endl;
-    for (const string & link : article.second) {
-      std::cout << "\t" << link << std::endl;
-    }
   }
 }
 
@@ -167,7 +156,7 @@ vector<string> Articles::ShortestPathWeighted(const string & source, const strin
 
 }
 
-vector<vector<string>> Articles::GetClusters() {
+vector<vector<string>> Articles::GetStronglyConnectedComponents() {
   unordered_set<string> visited_articles;
 
   // Runs BFS traversal to fill list of visited articles
