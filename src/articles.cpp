@@ -10,6 +10,10 @@ using std::pair;
 
 namespace wikigraphs {
 
+Articles::Articles() {
+
+}
+
 Articles::Articles(const string & article_path, const string & link_path) {
   wikigraphs::IOHandler io;
   
@@ -39,8 +43,7 @@ void Articles::AddLink(const string & article, const string & link) {
 
 void Articles::AddLinks(const vector<pair<string, string>> & links) {
   for (const pair<string, string> & link : links) {
-    AddLink(link.first, link.second);
-    
+    AddLink(link.first, link.second); 
   }
 }
 
@@ -151,6 +154,45 @@ vector<string> Articles::ShortestPathWeighted(const string & source, const strin
   std::reverse(path.begin(), path.end());
 
   return path;
+
+}
+
+vector<vector<string>> Articles::GetClusters() {
+  unordered_set<string> visited_articles;
+
+  for (auto articles : *this) {
+    visited_articles.insert(articles);
+  }
+
+  Articles transposed_graph;
+
+  for (const auto & article : articles) {
+    transposed_graph.AddArticle(article.first);
+  }
+
+  for (const auto & article : articles) {
+    for (const string & link : article.second) {
+      transposed_graph.AddLink(link, article.first);
+    }
+  }
+
+  vector<vector<string>> clusters;
+  while (!visited_articles.empty()) {
+    vector<string> cluster;
+
+    for (auto it = Iterator(&transposed_graph, *(visited_articles.begin())); it != end(); ++it) {
+      string article = *it;
+
+      if (visited_articles.find(article) != visited_articles.end()) {
+        cluster.push_back(article);
+        visited_articles.erase(article);
+      }
+    }
+
+    clusters.push_back(cluster);
+  }
+
+  return clusters;
 
 }
 

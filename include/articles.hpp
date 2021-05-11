@@ -22,7 +22,13 @@ namespace wikigraphs {
  * Edges represent links from one article to another
  */
 class Articles {
- public: 
+ public:
+  /**
+   * Default constructor that creates articles graphs with empty list of articles
+   * Since there are no articles, there aren't any links as well
+   */
+  Articles();
+
   /**
    * Builds the article graph by loading in the articles/links from the respective files
    * Takes in strings that act as file paths to dataset
@@ -67,6 +73,8 @@ class Articles {
   vector<string> ShortestPathUnweighted(const string & source, const string & target);
 
   vector<string> ShortestPathWeighted(const string & source, const string & target);
+
+  vector<vector<string>> GetClusters();
 
   class Iterator : std::iterator<std::forward_iterator_tag, string> {
    public:
