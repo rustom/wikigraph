@@ -8,9 +8,12 @@
 4. Development Reflections
 
 ### Proof of Functionality
-Test screenshot
+![](./pictures/test_confirmation.png)
+<br />
+Proof of our tests passing all provided cases is shown and can be replicated by running the command displayed above. A demonstration of our algorithms on the full dataset is provided in the `output` directory, which contains sample output file for each of the four functions that can be run from our main function, including the output from Kosaraju's and Dijkstra's weighted and unweighthed pathfinding algorithms. To run this main function, simply enter `make && ./wikigraphs`. The commands used to generate the sample output that is committed to this repository is displayed below. 
+
+![](./pictures/main_confirmation.png)
 <br>
-Files screenshot
 
 ### Deliverables
 - Driver program

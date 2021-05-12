@@ -48,7 +48,7 @@ class IOHandler {
   /** 
    * Writes a path of articles to the output directory.
    */
-  void WritePath(const vector<string> & path);
+  void WritePath(const vector<string> & path, bool isWeighted);
 
  private: 
 };

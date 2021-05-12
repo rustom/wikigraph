@@ -62,7 +62,7 @@ void Driver::Run(int argc, char **argv) {
       cout << "Please enter the name of the target article: " << endl;
       cin >> target;
 
-      handler.WritePath(articles.ShortestPathUnweighted(source, target));
+      handler.WritePath(articles.ShortestPathUnweighted(source, target), false);
     } else if (input == "w") {
       string source;
       string target;
@@ -71,7 +71,7 @@ void Driver::Run(int argc, char **argv) {
       cout << "Please enter the name of the target article: " << endl;
       cin >> target;
 
-      handler.WritePath(articles.ShortestPathWeighted(source, target));
+      handler.WritePath(articles.ShortestPathWeighted(source, target), true);
     } else if (input == "q") {
       cout << "Thank you for using wikigraphs!" << endl;
       break;

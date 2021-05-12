@@ -160,7 +160,7 @@ TEST_CASE(
   SECTION("Articles graph has multiple clusters of articles") {
     Articles articles("data/tests/articles.tsv",
                       "data/tests/multiple_clusters_links.tsv");
-    vector<vector<string>> clusters = articles.GetClusters();
+    vector<vector<string>> clusters = articles.GetStronglyConnectedComponents();
 
     SECTION("Number of clusters") { REQUIRE(clusters.size() == 3); }
 
@@ -179,7 +179,7 @@ TEST_CASE(
   SECTION("Articles graph has single cluster containing all the artices") {
     Articles articles("data/tests/articles.tsv",
                       "data/tests/single_cluster_links.tsv");
-    vector<vector<string>> clusters = articles.GetClusters();
+    vector<vector<string>> clusters = articles.GetStronglyConnectedComponents();
 
     SECTION("Number of clusters") { REQUIRE(clusters.size() == 1); }
 

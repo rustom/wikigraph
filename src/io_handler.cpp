@@ -77,9 +77,16 @@ void IOHandler::WriteArticles(
   file.close();
 }
 
-void IOHandler::WritePath(const vector<string> &path) {
+void IOHandler::WritePath(const vector<string> &path, bool isWeighted) {
   ofstream file;
-  file.open("output/path_" + path[0] + "_to_" + path[path.size() - 1] + ".txt");
+
+  string filename = "output/";
+
+  filename += isWeighted ? "weighted_" : "unweighted_"; 
+
+  filename += "path_" + path[0] + "_to_" + path[path.size() - 1] + ".txt";
+
+  file.open(filename);
 
   for (size_t i = 0; i < path.size(); ++i) {
     file << i << " " << path[i] << endl;

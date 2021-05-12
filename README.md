@@ -66,3 +66,12 @@ Afterwards, run the generated executable by typing:
 ```
 ./a.out
 ```
+
+## Clearing Output
+
+To delete all of the temporary object files and executables created by Make, run the following:
+```
+make clean
+```
+
+Please note that this intentionally will not delete the text file outputs generated in the `output` directory.
