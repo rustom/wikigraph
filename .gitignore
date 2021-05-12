@@ -3,4 +3,5 @@
 articles.o
 io_handler.o
 main.o
+driver.o
 wikigraphs

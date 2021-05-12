@@ -18,8 +18,8 @@
    
 - [X] April 9 - Submit project proposal and team contract   
 - [X] April 16 - Set up Makefile, folder structure, and be able to read in data 
-- [ ] April 23 - Create iterators, Dijkstra's algorithm, and their tests 
-- [ ] April 29 - Create Kosaraju's algorithms and tests        
-- [ ] May 7 - Complete main program driver and report
-- [ ] May 8 - Record final presentation and submit
+- [X] April 23 - Create iterators, Dijkstra's algorithm, and their tests 
+- [X] April 29 - Create Kosaraju's algorithms and tests        
+- [X] May 7 - Complete main program driver and report
+- [X] May 8 - Record final presentation and submit
    
